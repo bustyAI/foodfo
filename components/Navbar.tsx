@@ -9,7 +9,10 @@ import { RxHamburgerMenu } from "react-icons/rx";
 
 const Navbar = () => {
   return (
-    <div className="flex flex-row items-center justify-between m-4">
+    <nav
+      aria-label="Main Navigation"
+      className="flex flex-row items-center justify-between m-4"
+    >
       <Link href={"#"}>
         <Logo />
       </Link>
@@ -25,7 +28,7 @@ const Navbar = () => {
           <RxHamburgerMenu className=" text-2xl" />
         </Link>
       </div>
-    </div>
+    </nav>
   );
 };
 
