@@ -8,3 +8,15 @@
 body {
   background-color: white;
 }
+
+.hero-border {
+  position: absolute;
+  border-radius: 64% 36% 60% 40% / 36% 51% 49% 64%;
+  background-color: orange;
+  width: 225px;
+  height: 225px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}

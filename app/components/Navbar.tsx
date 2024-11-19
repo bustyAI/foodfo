@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 // Components
-import { Logo } from "@/components";
+import { Logo } from "@/app/components";
 
 // Icons
 import { RxHamburgerMenu } from "react-icons/rx";
