@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-export const authOptions = {
+// Directly export the NextAuth handler with the configuration
+export default NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -11,6 +12,4 @@ export const authOptions = {
   pages: {
     signIn: "/login",
   },
-};
-
-export const handler = NextAuth(authOptions);
+});
