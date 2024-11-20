@@ -8,8 +8,8 @@ export default function Home() {
 
       <Button
         borderColor="border-orange-500"
-        textColor="text-orange-500"
         buttonText="Get Started"
+        textColor="text-orange-500"
         buttonHoverColor="bg-orange-500"
         textHoverColor="text-white"
       />
