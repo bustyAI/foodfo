@@ -7,6 +7,7 @@ interface ButtonProps {
   textHoverColor?: string;
   buttonText: string;
   classParams?: string;
+  onClick?: () => void;
 }
 
 const Button = ({
@@ -16,10 +17,12 @@ const Button = ({
   buttonHoverColor = "bg-black",
   textHoverColor = "text-white",
   classParams = "",
+  onClick,
 }: ButtonProps) => {
   return (
     <div className="flex justify-center  w-full mt-12">
       <button
+        onClick={onClick}
         className={`p-2 ${textColor} ${classParams}
       font-semibold
       rounded-md border-2

@@ -1,6 +1,9 @@
 "use client";
 import React, { FormEvent } from "react";
 
+// Auth
+import { signIn } from "next-auth/react";
+
 // Components
 import { LoginInfo, Button } from "../components";
 
@@ -12,6 +15,11 @@ const Login = () => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     alert("Form submitted");
+    console.log(process.env.GOOGLE_CLIENT_ID);
+  };
+
+  const handleGoogleLogin = () => {
+    signIn("google");
   };
 
   return (
@@ -47,6 +55,17 @@ const Login = () => {
             textHoverColor="text-white"
           />
         </form>
+        <div className="mt-6">
+          <Button
+            classParams="w-3/5"
+            borderColor="border-blue-500"
+            textColor="text-blue-500"
+            buttonText="Login with Google"
+            buttonHoverColor="bg-blue-500"
+            textHoverColor="text-white"
+            onClick={handleGoogleLogin}
+          />
+        </div>
         <div className="flex items-center justify-between w-full mt-10 mb-4">
           <span className="flex-1 border-t border-slate-300"></span>
           <span className=" text-sm mx-4 text-center text-slate-500">
