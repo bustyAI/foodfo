@@ -1,8 +1,10 @@
+// app/api/auth/[...nextauth]/route.tsx
+
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-// Directly export the handler for this route
-export const handler = NextAuth({
+// Define the NextAuth configuration
+const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -10,9 +12,15 @@ export const handler = NextAuth({
     }),
   ],
   pages: {
-    signIn: "/login",
+    signIn: "/login", // Specify the custom login page URL
   },
-});
+};
 
-// Add support for both GET and POST requests to this route
-export { handler as GET, handler as POST };
+// Define GET and POST methods for the API route
+export async function GET(request: Request) {
+  return NextAuth(authOptions); // Passing authOptions to NextAuth
+}
+
+export async function POST(request: Request) {
+  return NextAuth(authOptions); // Passing authOptions to NextAuth
+}
