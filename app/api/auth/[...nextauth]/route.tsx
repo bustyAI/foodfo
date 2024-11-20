@@ -1,8 +1,8 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-// Directly export the NextAuth handler with the configuration
-export default NextAuth({
+// Directly export the handler for this route
+export const handler = NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -13,3 +13,6 @@ export default NextAuth({
     signIn: "/login",
   },
 });
+
+// Add support for both GET and POST requests to this route
+export { handler as GET, handler as POST };
