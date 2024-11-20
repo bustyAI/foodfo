@@ -2,5 +2,6 @@
 import Navbar from "./Navbar";
 import Logo from "./Logo";
 import Hero from "./Hero";
+import Button from "./Button";
 
-export { Navbar, Logo, Hero };
+export { Navbar, Logo, Hero, Button };
