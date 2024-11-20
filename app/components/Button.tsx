@@ -16,17 +16,19 @@ const Button = ({
   textHoverColor = "text-white",
 }: ButtonProps) => {
   return (
-    <button
-      className={`p-2 ${textColor}
+    <div className="flex justify-center mt-12">
+      <button
+        className={`p-2 ${textColor}
       font-semibold
       rounded-md border-2
        ${borderColor}
        hover:${buttonHoverColor}
        hover:${textHoverColor}
        transition-colors duration-300 ease-in-out`}
-    >
-      {buttonText}
-    </button>
+      >
+        {buttonText}
+      </button>
+    </div>
   );
 };
 
