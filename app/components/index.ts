@@ -7,5 +7,16 @@ import AboutUs from "./AboutUs";
 import Footer from "./Footer";
 import LoginInfo from "./LoginInfo";
 import Login from "./Login";
+import LoginForm from "./LoginForm";
 
-export { Navbar, Logo, Hero, Button, AboutUs, Footer, LoginInfo, Login };
+export {
+  Navbar,
+  Logo,
+  Hero,
+  Button,
+  AboutUs,
+  Footer,
+  LoginInfo,
+  Login,
+  LoginForm,
+};
