@@ -19,7 +19,7 @@ const Navbar = () => {
 
       <div className="flex flex-row space-x-6">
         <Link href={"#"}>Home</Link>
-        <Link href={"#"}>My pantry</Link>
+        <Link href={"/pantry"}>My pantry</Link>
         <Link href={"#"}>Add food</Link>
       </div>
 

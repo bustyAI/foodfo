@@ -1,7 +1,38 @@
 import React from "react";
 
-function Pantry() {
-  return <div>Pantry</div>;
-}
+// Auth
+import { withPageAuthRequired, getSession } from "@auth0/nextjs-auth0";
 
-export default Pantry;
+// Components
+import { Button } from "../components";
+
+export default withPageAuthRequired(
+  async function Pantry() {
+    const session = await getSession();
+
+    return (
+      <div>
+        <h1>hello there</h1>
+        <h2>this is the pantry</h2>
+        <h3>this is your token</h3>
+        <pre>
+          {JSON.stringify({ accessToken: session?.accessToken }, null, 2)}
+        </pre>
+        <h1>User</h1>
+        <pre>{JSON.stringify(session?.user, null, 2)}</pre>
+        <h2>Server Component</h2>
+
+        <h3>Client Component</h3>
+
+        <a href="/api/auth/logout">
+          <Button
+            buttonText="Logout"
+            textColor="text-orange-500"
+            borderColor="border-orange-500"
+          />
+        </a>
+      </div>
+    );
+  },
+  { returnTo: "/pantry" }
+);
