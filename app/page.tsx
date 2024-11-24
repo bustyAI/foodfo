@@ -1,5 +1,4 @@
 import { Navbar, Hero, Button, Footer } from "@/app/components";
-import Link from "next/link";
 
 export default function Home() {
   return (
@@ -7,7 +6,7 @@ export default function Home() {
       <Navbar />
       <Hero />
 
-      <Link href={"/login"}>
+      <a href={"/api/auth/login?returnTo=/pantry"}>
         <Button
           borderColor="border-orange-500"
           buttonText="Get Started"
@@ -15,7 +14,7 @@ export default function Home() {
           buttonHoverColor="bg-orange-500"
           textHoverColor="text-white"
         />
-      </Link>
+      </a>
       <Footer />
     </main>
   );

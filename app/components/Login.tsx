@@ -17,8 +17,6 @@ const Login = () => {
 
         <LoginForm handleSubmit={handleSubmit} />
 
-        <a href="/api/auth/login">Login</a>
-
         <div className="flex items-center justify-between w-full mt-10 mb-4">
           <span className="flex-1 border-t border-slate-300"></span>
           <span className=" text-sm mx-4 text-center text-slate-500">

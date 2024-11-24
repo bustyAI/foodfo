@@ -14,8 +14,8 @@ const Button = ({
   borderColor = "bg-white",
   textColor = "text-white",
   buttonText = "Button Text",
-  buttonHoverColor = "bg-black",
-  textHoverColor = "text-white",
+  buttonHoverColor = "",
+  textHoverColor = "",
   classParams = "",
   onClick,
 }: ButtonProps) => {
