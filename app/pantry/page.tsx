@@ -15,15 +15,8 @@ export default withPageAuthRequired(
         <h1>hello there</h1>
         <h2>this is the pantry</h2>
         <h3>this is your token</h3>
-        <pre>
-          {JSON.stringify({ accessToken: session?.accessToken }, null, 2)}
-        </pre>
         <h1>User</h1>
         <pre>{JSON.stringify(session?.user, null, 2)}</pre>
-        <h2>Server Component</h2>
-
-        <h3>Client Component</h3>
-
         <a href="/api/auth/logout">
           <Button
             buttonText="Logout"
