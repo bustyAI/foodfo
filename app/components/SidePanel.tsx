@@ -12,7 +12,6 @@ interface SidePanelProps {
 function SidePanel({ isOpen, onClose }: SidePanelProps) {
   return (
     <>
-      {/* Glassmorphism Overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-orange-500 bg-opacity-5 backdrop-blur-sm z-40"
@@ -38,6 +37,9 @@ function SidePanel({ isOpen, onClose }: SidePanelProps) {
           </li>
           <li>
             <Link href="/add-food">Add food</Link>
+          </li>
+          <li>
+            <a href="/api/auth/logout">Log out</a>
           </li>
         </ul>
       </div>
