@@ -2,14 +2,15 @@ import React from "react";
 import Link from "next/link";
 
 // Auth
-import auth0 from "@/utils/auth0";
+import { UserProfile } from "@auth0/nextjs-auth0/client";
 
 interface SidePanelProps {
   isOpen: boolean;
   onClose: () => void;
+  user?: UserProfile;
 }
 
-function SidePanel({ isOpen, onClose }: SidePanelProps) {
+function SidePanel({ isOpen, onClose, user }: SidePanelProps) {
   return (
     <>
       {isOpen && (
@@ -38,9 +39,16 @@ function SidePanel({ isOpen, onClose }: SidePanelProps) {
           <li>
             <Link href="/add-food">Add food</Link>
           </li>
-          <li>
-            <a href="/api/auth/logout">Log out</a>
-          </li>
+          {user ? (
+            <li>
+              {" "}
+              <a href="/api/auth/logout">Logout</a>
+            </li>
+          ) : (
+            <li>
+              <a href="/api/auth/login">Login</a>
+            </li>
+          )}
         </ul>
       </div>
     </>

@@ -2,6 +2,9 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
+// Auth
+import { useUser } from "@auth0/nextjs-auth0/client";
+
 // Components
 import { Logo, SidePanel } from "@/app/components";
 
@@ -10,6 +13,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 
 const Navbar = () => {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const { user } = useUser();
 
   const handlePanel = () => {
     setIsPanelOpen((prev) => !prev);
@@ -30,7 +34,11 @@ const Navbar = () => {
           </button>
         </div>
       </nav>
-      <SidePanel isOpen={isPanelOpen} onClose={() => setIsPanelOpen(false)} />
+      <SidePanel
+        user={user}
+        isOpen={isPanelOpen}
+        onClose={() => setIsPanelOpen(false)}
+      />
     </>
   );
 };

@@ -18,15 +18,20 @@ function Pantry() {
 
   if (user) {
     return (
-      <div className=" bg-orange-300 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {foods.map((food) => (
-          <FoodCard
-            key={food.name}
-            name={food.name}
-            expDate={food.expDate}
-            category={food.category}
-          />
-        ))}
+      <div className="flex flex-col">
+        <div className=" text-center bg-orange-300 p-2">
+          {user && <h1>{user.name}'s Pantry</h1>}
+        </div>
+        <div className=" bg-orange-300 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {foods.map((food) => (
+            <FoodCard
+              key={food.name}
+              name={food.name}
+              expDate={food.expDate}
+              category={food.category}
+            />
+          ))}
+        </div>
       </div>
     );
   }
