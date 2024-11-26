@@ -9,6 +9,7 @@ import LoginInfo from "./LoginInfo";
 import Login from "./Login";
 import LoginForm from "./LoginForm";
 import FoodCard from "./FoodCard";
+import SidePanel from "./SidePanel";
 
 export {
   Navbar,
@@ -21,4 +22,5 @@ export {
   Login,
   LoginForm,
   FoodCard,
+  SidePanel,
 };
