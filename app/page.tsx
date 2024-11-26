@@ -6,7 +6,7 @@ export default function Home() {
       <Navbar />
       <Hero />
 
-      <a href={"/api/auth/login?returnTo=/pantry"}>
+      <a href={"/api/auth/login"}>
         <Button
           borderColor="border-orange-500"
           buttonText="Get Started"

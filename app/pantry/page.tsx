@@ -1,31 +1,38 @@
 import React from "react";
-
-// Auth
-import { withPageAuthRequired, getSession } from "@auth0/nextjs-auth0";
-
-// Components
+import auth0 from "@/utils/auth0";
+import Image from "next/image";
 import { Button } from "../components";
 
-export default withPageAuthRequired(
-  async function Pantry() {
-    const session = await getSession();
+interface User {
+  name?: string;
+  email?: string;
+  picture?: string;
+}
 
-    return (
-      <div>
-        <h1>hello there</h1>
-        <h2>this is the pantry</h2>
-        <h3>this is your token</h3>
-        <h1>User</h1>
-        <pre>{JSON.stringify(session?.user, null, 2)}</pre>
-        <a href="/api/auth/logout">
-          <Button
-            buttonText="Logout"
-            textColor="text-orange-500"
-            borderColor="border-orange-500"
-          />
-        </a>
-      </div>
-    );
-  },
-  { returnTo: "/pantry" }
-);
+async function Pantry() {
+  // Get the session object and destructure user from it
+  const session = await auth0.getSession();
+  const user: User | undefined = session?.user; // Handle possible undefined/null session
+
+  return (
+    <div>
+      <h1>Hello {user?.name || "Guest"}</h1>
+      <h1>{JSON.stringify(user)}</h1>
+      <Image
+        src={`${user?.picture}`}
+        alt="profile-pic"
+        width={50}
+        height={50}
+      />
+      <a href="/api/auth/logout">
+        <Button
+          buttonText="Logout"
+          textColor="text-orange-500"
+          borderColor="border-orange-500"
+        />
+      </a>
+    </div>
+  );
+}
+
+export default Pantry;
