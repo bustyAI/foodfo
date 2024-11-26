@@ -1,4 +1,4 @@
-import { Navbar, Hero, Button, Footer } from "@/app/components";
+import { Hero, Button, Footer } from "@/app/components";
 
 export default function Home() {
   return (
