@@ -14,6 +14,7 @@ const Navbar = () => {
   const handlePanel = () => {
     setIsPanelOpen((prev) => !prev);
   };
+
   return (
     <>
       <nav
@@ -23,8 +24,6 @@ const Navbar = () => {
         <Link href={"#"}>
           <Logo />
         </Link>
-
-        <h1>Welcome</h1>
         <div className="flex">
           <button onClick={handlePanel}>
             <RxHamburgerMenu className=" text-2xl" />
