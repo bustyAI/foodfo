@@ -1,7 +1,15 @@
 import React from "react";
-import auth0 from "@/utils/auth0";
 import Image from "next/image";
+
+//Auth
+import auth0 from "@/utils/auth0";
+
+// Components
 import { Button } from "../components";
+import { FoodCard } from "../components";
+
+// Dummy Data
+import { foods } from "@/utils/data";
 
 interface User {
   name?: string;
@@ -15,22 +23,15 @@ async function Pantry() {
   const user: User | undefined = session?.user; // Handle possible undefined/null session
 
   return (
-    <div>
-      <h1>Hello {user?.name || "Guest"}</h1>
-      <h1>{JSON.stringify(user)}</h1>
-      <Image
-        src={`${user?.picture}`}
-        alt="profile-pic"
-        width={50}
-        height={50}
-      />
-      <a href="/api/auth/logout">
-        <Button
-          buttonText="Logout"
-          textColor="text-orange-500"
-          borderColor="border-orange-500"
+    <div className=" bg-orange-300 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {foods.map((food) => (
+        <FoodCard
+          key={food.name}
+          name={food.name}
+          expDate={food.expDate}
+          category={food.category}
         />
-      </a>
+      ))}
     </div>
   );
 }

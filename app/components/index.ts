@@ -8,6 +8,7 @@ import Footer from "./Footer";
 import LoginInfo from "./LoginInfo";
 import Login from "./Login";
 import LoginForm from "./LoginForm";
+import FoodCard from "./FoodCard";
 
 export {
   Navbar,
@@ -19,4 +20,5 @@ export {
   LoginInfo,
   Login,
   LoginForm,
+  FoodCard,
 };
