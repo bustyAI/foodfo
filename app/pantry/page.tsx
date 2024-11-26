@@ -19,7 +19,7 @@ function Pantry() {
   if (user) {
     return (
       <div className="flex flex-col">
-        <div className=" text-center bg-orange-300 p-2">
+        <div className=" text-center bg-orange-300 p-2 font-bold">
           {user && <h1>{user.name}'s Pantry</h1>}
         </div>
         <div className=" bg-orange-300 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

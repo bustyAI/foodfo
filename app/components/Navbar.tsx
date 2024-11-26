@@ -23,7 +23,7 @@ const Navbar = () => {
     <>
       <nav
         aria-label="Main Navigation"
-        className="flex flex-row items-center justify-between m-4"
+        className="flex flex-row items-center justify-between p-4"
       >
         <Link href={"#"}>
           <Logo />
