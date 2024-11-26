@@ -1,14 +1,13 @@
 import React from "react";
+
 // Auth
 import auth0 from "@/utils/auth0";
+
 // Components
 import { FoodCard } from "../components";
+
 // Dummy Data
 import { foods } from "@/utils/data";
-
-interface User {
-  name?: string;
-}
 
 const Pantry = async () => {
   return (
