@@ -11,6 +11,11 @@ interface SidePanelProps {
 }
 
 function SidePanel({ isOpen, onClose, user }: SidePanelProps) {
+  const handleClick = (event: React.MouseEvent<HTMLUListElement>) => {
+    if ((event.target as HTMLElement).tagName === "A") {
+      onClose();
+    }
+  };
   return (
     <>
       {isOpen && (
@@ -29,7 +34,7 @@ function SidePanel({ isOpen, onClose, user }: SidePanelProps) {
         <button onClick={onClose} className="p-4">
           Close
         </button>
-        <ul className="p-4 space-y-4">
+        <ul onClick={handleClick} className="p-4 space-y-4">
           <li>
             <Link href="/">Home</Link>
           </li>
