@@ -10,6 +10,8 @@ import Login from "./Login";
 import LoginForm from "./LoginForm";
 import FoodCard from "./FoodCard";
 import SidePanel from "./SidePanel";
+import UnauthorizedUser from "./UnauthorizedUser";
+import OrangeBallText from "./OrangeBallText";
 
 export {
   Navbar,
@@ -23,4 +25,6 @@ export {
   LoginForm,
   FoodCard,
   SidePanel,
+  UnauthorizedUser,
+  OrangeBallText,
 };

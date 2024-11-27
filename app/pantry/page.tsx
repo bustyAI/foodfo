@@ -4,7 +4,7 @@ import React from "react";
 // Auth
 import { useUser } from "@auth0/nextjs-auth0/client";
 // Components
-import { FoodCard } from "../components";
+import { FoodCard, UnauthorizedUser } from "../components";
 
 // Dummy Data
 import { foods } from "@/utils/data";
@@ -35,7 +35,7 @@ function Pantry() {
       </div>
     );
   }
-  return <div>We dont know who you are</div>;
+  return <UnauthorizedUser />;
 }
 
 export default Pantry;
