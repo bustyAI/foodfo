@@ -4,7 +4,7 @@ import React from "react";
 // Auth
 import { useUser } from "@auth0/nextjs-auth0/client";
 // Components
-import { FoodCard, UnauthorizedUser } from "../components";
+import { FoodCard, Loading } from "../components";
 
 // Dummy Data
 import { foods } from "@/utils/data";
@@ -13,7 +13,7 @@ function Pantry() {
   const { user, isLoading } = useUser();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (user) {
@@ -35,7 +35,7 @@ function Pantry() {
       </div>
     );
   }
-  return <UnauthorizedUser />;
+  return <Loading />;
 }
 
 export default Pantry;

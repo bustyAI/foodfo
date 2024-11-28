@@ -12,6 +12,8 @@ import FoodCard from "./FoodCard";
 import SidePanel from "./SidePanel";
 import UnauthorizedUser from "./UnauthorizedUser";
 import OrangeBallText from "./OrangeBallText";
+import Loading from "./Loading";
+import LoadingCircle from "./LoadingCircle";
 
 export {
   Navbar,
@@ -27,4 +29,6 @@ export {
   SidePanel,
   UnauthorizedUser,
   OrangeBallText,
+  Loading,
+  LoadingCircle,
 };
