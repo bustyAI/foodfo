@@ -20,6 +20,7 @@ body {
   transform: translate(-50%, -50%);
   z-index: 0;
 }
+
 .loading {
   animation: moveUpDown 1s infinite alternate;
 }
@@ -45,9 +46,9 @@ body {
 
 @keyframes moveUpDown {
   from {
-    transform: translateY(20px);
+    transform: translateY(0);
   }
   to {
-    transform: translateY();
+    transform: translateY(20px);
   }
 }

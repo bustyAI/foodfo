@@ -34,12 +34,10 @@ function LoginForm({ handleSubmit }: LoginFormProps) {
         </h1>
       </div>
       <Button
-        classParams="w-3/5"
+        classParams="w-3/5 hover:bg-orange-500 hover:text-white"
         borderColor="border-orange-500"
         textColor="text-orange-500"
         buttonText="Login"
-        buttonHoverColor="bg-orange-500"
-        textHoverColor="text-white"
       />
     </form>
   );

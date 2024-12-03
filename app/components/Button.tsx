@@ -14,8 +14,6 @@ const Button = ({
   borderColor = "bg-white",
   textColor = "text-white",
   buttonText = "Button Text",
-  buttonHoverColor = "",
-  textHoverColor = "",
   classParams = "",
   onClick,
 }: ButtonProps) => {
@@ -27,8 +25,6 @@ const Button = ({
       font-semibold
       rounded-md border-2
        ${borderColor}
-       hover:${buttonHoverColor}
-       hover:${textHoverColor}
        transition-colors duration-300 ease-in-out`}
       >
         {buttonText}

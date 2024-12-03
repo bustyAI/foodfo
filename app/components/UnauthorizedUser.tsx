@@ -11,8 +11,9 @@ const UnauthorizedUser = () => {
         bottomText="to login"
         description="Hit that get started button!"
       />
-      <a>
+      <a href="/api/auth/login">
         <Button
+          classParams="hover:bg-orange-500 hover:text-white"
           buttonText="Get Started"
           textColor="text-orange-500"
           borderColor="border-orange-500"
