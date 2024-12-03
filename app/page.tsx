@@ -5,14 +5,14 @@ export default function Home() {
     <main className=" min-h-screen flex flex-col overflow-hidden">
       <Hero />
 
-      <a href={"/api/auth/login"}>
-        <Button
-          classParams="hover:bg-orange-500 hover:text-white"
-          borderColor="border-orange-500"
-          buttonText="Get Started"
-          textColor="text-orange-500"
-        />
-      </a>
+      <Button
+        href="/api/auth/login"
+        classParams="hover:bg-orange-500 hover:text-white"
+        borderColor="border-orange-500"
+        buttonText="Get Started"
+        textColor="text-orange-500"
+      />
+
       <Footer />
     </main>
   );
