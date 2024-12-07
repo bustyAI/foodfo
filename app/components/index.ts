@@ -14,6 +14,7 @@ import UnauthorizedUser from "./UnauthorizedUser";
 import OrangeBallText from "./OrangeBallText";
 import Loading from "./Loading";
 import LoadingCircle from "./LoadingCircle";
+import CameraCampture from "./CameraCampture";
 
 export {
   Navbar,
@@ -31,4 +32,5 @@ export {
   OrangeBallText,
   Loading,
   LoadingCircle,
+  CameraCampture,
 };
