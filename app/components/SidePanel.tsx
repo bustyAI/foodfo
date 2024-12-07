@@ -42,7 +42,7 @@ function SidePanel({ isOpen, onClose, user }: SidePanelProps) {
             <Link href="/pantry">My pantry</Link>
           </li>
           <li>
-            <Link href="/add-food">Add food</Link>
+            <Link href="/addfood">Add food</Link>
           </li>
           {user ? (
             <li>
