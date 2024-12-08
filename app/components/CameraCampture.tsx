@@ -1,8 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 const CameraCampture = () => {
   const [image, setImage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleStartCapture = () => {
+    fileInputRef.current?.click();
+  };
 
   const handleCapture = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -19,7 +24,7 @@ const CameraCampture = () => {
     <div>
       {!image && (
         <label>
-          <button>Start Capture</button>
+          <button onClick={handleStartCapture}>Start Capture</button>
           <input
             type="file"
             accept="image/*"
