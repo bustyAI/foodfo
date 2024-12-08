@@ -15,6 +15,7 @@ import OrangeBallText from "./OrangeBallText";
 import Loading from "./Loading";
 import LoadingCircle from "./LoadingCircle";
 import CameraCampture from "./CameraCampture";
+import ButtonNoHref from "./ButtonNoHref";
 
 export {
   Navbar,
@@ -33,4 +34,5 @@ export {
   Loading,
   LoadingCircle,
   CameraCampture,
+  ButtonNoHref,
 };
