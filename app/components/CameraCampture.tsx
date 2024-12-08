@@ -1,12 +1,12 @@
 "use client";
 import React, { useRef, useState } from "react";
 import ButtonNoHref from "./ButtonNoHref";
+import ReceiptOCR from "./ReceiptOCR";
 
-const CameraCampture = () => {
+const CameraCapture = () => {
   const [image, setImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  // Trigger the hidden input element here
   const handleStartCapture = () => {
     fileInputRef.current?.click();
   };
@@ -23,6 +23,7 @@ const CameraCampture = () => {
       reader.onloadend = () => {
         setImage(reader.result as string);
       };
+      reader.onerror = () => alert("Failed to read file. Please try again.");
       reader.readAsDataURL(file);
     }
   };
@@ -52,13 +53,14 @@ const CameraCampture = () => {
             className="w-[50%]"
             src={image}
             alt="captured"
-            style={{ width: "50%" }}
+            style={{ width: "10%" }}
           />
           <ButtonNoHref onClick={handleRedoCapture} text="Redo Capture" />
+          <ReceiptOCR image={image} />
         </div>
       )}
     </div>
   );
 };
 
-export default CameraCampture;
+export default CameraCapture;
