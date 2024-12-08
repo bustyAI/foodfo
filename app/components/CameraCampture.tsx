@@ -49,12 +49,7 @@ const CameraCapture = () => {
       {image && (
         <div className="flex flex-col justify-center items-center">
           <h3>Captured Image:</h3>
-          <img
-            className="w-[50%]"
-            src={image}
-            alt="captured"
-            style={{ width: "10%" }}
-          />
+          <img className="w-[20%]" src={image} alt="captured-image" />
           <ButtonNoHref onClick={handleRedoCapture} text="Redo Capture" />
           <ReceiptOCR image={image} />
         </div>

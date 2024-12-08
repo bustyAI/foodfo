@@ -42,10 +42,11 @@ const useReceiptOCR = (image: string | null) => {
         }
 
         if (/total/i.test(line)) {
-          const match = line.match(/total.*?(\d+\.\d{2})/i); // Match "Total" with the price
+          // Extracting total amount
+          const match = line.match(/total.*?(\d+\.\d{2})/i);
           if (match) {
             total = match[1];
-            break; // Stop searching after finding the total
+            break;
           }
         }
       }
