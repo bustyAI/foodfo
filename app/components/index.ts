@@ -17,6 +17,7 @@ import LoadingCircle from "./LoadingCircle";
 import CameraCampture from "./CameraCampture";
 import ButtonNoHref from "./ButtonNoHref";
 import ReceiptOCR from "./ReceiptOCR";
+import NoFood from "./NoFood";
 
 export {
   Navbar,
@@ -37,4 +38,5 @@ export {
   CameraCampture,
   ButtonNoHref,
   ReceiptOCR,
+  NoFood,
 };
