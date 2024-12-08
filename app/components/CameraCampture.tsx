@@ -30,6 +30,7 @@ const CameraCampture = () => {
             accept="image/*"
             capture="environment"
             style={{ display: "none" }}
+            ref={fileInputRef}
             onChange={handleCapture}
           />
         </label>
