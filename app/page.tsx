@@ -7,7 +7,7 @@ export default function Home() {
 
       <Button
         href="/api/auth/login"
-        classParams="hover:bg-orange-500 hover:text-white"
+        classParams=" mb-24 hover:bg-orange-500 hover:text-white"
         borderColor="border-orange-500"
         buttonText="Get Started"
         textColor="text-orange-500"
