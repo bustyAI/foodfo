@@ -1,56 +1,39 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 
 const CameraCampture = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [image, setImage] = useState<string>("");
-  const [cameraActive, setCameraActive] = useState<boolean>(false);
+  const [image, setImage] = useState<string | null>(null);
 
-  const startCamera = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    if (videoRef.current) {
-      videoRef.current.srcObject = stream;
-      videoRef.current.play();
-      setCameraActive(true);
+  const handleCapture = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     }
   };
-
-  const captureImage = () => {
-    if (videoRef.current && canvasRef.current) {
-      const canvas = canvasRef.current;
-      const context = canvas.getContext("2d");
-      const video = videoRef.current;
-
-      if (context) {
-        canvas.width = video.width;
-        canvas.height = video.height;
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        setImage(canvas.toDataURL("image/png"));
-
-        const stream = video.srcObject as MediaStream;
-        stream.getTracks().forEach((track) => track.stop());
-        setCameraActive(false);
-      }
-    }
-  };
-
   return (
-    <div className="flex flex-col">
-      {!cameraActive && !image && (
-        <button onClick={startCamera}>Start Camera</button>
+    <div>
+      {!image && (
+        <label>
+          <button>Start Capture</button>
+          <input
+            type="file"
+            accept="image/*"
+            capture="environment"
+            style={{ display: "none" }}
+            onChange={handleCapture}
+          />
+        </label>
       )}
-      {cameraActive && (
-        <div>
-          <video ref={videoRef} style={{ width: "100%" }} />
-          <button onClick={captureImage}>Capture</button>
-        </div>
-      )}
-      <canvas ref={canvasRef} style={{ display: "none" }} />
+
       {image && (
         <div>
           <h3>Captured Image:</h3>
-          <img src={image} alt="Captured" style={{ width: "100%" }} />
+          <img src={image} alt="captured" style={{ width: "100%" }} />
         </div>
       )}
     </div>
