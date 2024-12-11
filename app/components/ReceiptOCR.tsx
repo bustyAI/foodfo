@@ -28,7 +28,7 @@ const ReceiptOCR = ({ image }: { image: string }) => {
         />
       )}
       {!isProcessing && receiptData && (
-        <h3 className="mt-6">Total: {receiptData}</h3>
+        <h3 className="mt-6">Total: ${receiptData}</h3>
       )}
     </div>
   );
