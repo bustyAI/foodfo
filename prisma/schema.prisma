@@ -23,6 +23,7 @@ model User {
 model Pantry {
   id            Int      @id @default(autoincrement())
   name          String
+  total         Float?
   userId        Int      @unique
   user          User     @relation(fields: [userId], references: [id])
   pantryItems   Food[]
@@ -31,8 +32,9 @@ model Pantry {
 model Food {
   id            Int      @id @default(autoincrement())
   name          String
-  category      String
-  expDate       String
+  category      String?
+  expDate       String?
+  price         Float?
   pantryId      Int
   pantry        Pantry   @relation(fields: [pantryId], references: [id])
 }
