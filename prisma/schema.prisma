@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,6 +5,33 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id     Int     @id @default(autoincrement())
+  name   String
+  email  String  @unique
+  pantry Pantry?
+}
+
+model Pantry {
+  id          Int     @id @default(autoincrement())
+  name        String?
+  userId      Int     @unique
+  total       Float   @default(0.0)
+  pantryItems Food[]
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Food {
+  id       Int           @id @default(autoincrement())
+  name     String
+  pantryId Int
+  price    Float
+  quantity Int           @default(1)
+  category FoodCategory?
+  expDate    DateTime?       @default("1998-06-03T00:00:00.000Z")
+  pantry   Pantry        @relation(fields: [pantryId], references: [id], onDelete: Cascade)
 }
 
 enum FoodCategory {
@@ -26,32 +47,4 @@ enum FoodCategory {
   spicesAndCondiments
   frozenAndPrepared
   cannedAndPackaged
-}
-
-
-model User {
-  id            Int       @id @default(autoincrement())
-  name          String
-  email         String    @unique
-  pantries      Pantry[]  // Allowing multiple pantries per user
-}
-
-model Pantry {
-  id            Int      @id @default(autoincrement())
-  name          String
-  total         Float    @default(0.0)
-  userId        Int
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  pantryItems   Food[]
-}
-
-model Food {
-  id            Int          @id @default(autoincrement())
-  name          String
-  category      FoodCategory?
-  expDate       DateTime?
-  price         Float
-  quantity      Int          @default(1)
-  pantryId      Int
-  pantry        Pantry       @relation(fields: [pantryId], references: [id], onDelete: Cascade)
 }

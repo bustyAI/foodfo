@@ -1,151 +1,87 @@
 import React from "react";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma";
 
-const prisma = new PrismaClient();
+const user = await prisma.user.findFirst({
+  include: {
+    pantry: {
+      include: {
+        pantryItems: true,
+      },
+    },
+  },
+});
 
-const page = async () => {
-  // const users = [
-  //   {
-  //     name: "Alice",
-  //     email: "alice@example.com",
-  //     pantry: {
-  //       name: "Alice's Pantry",
-  //       total: 100.5,
-  //       pantryItems: [
-  //         { name: "Apples", category: "Fruits", expDate: "2024-12-31", price: 3.5 },
-  //         { name: "Bread", category: "Grains", expDate: "2024-12-15", price: 2.0 },
-  //       ],
-  //     },
-  //   },
-  //   {
-  //     name: "Bob",
-  //     email: "bob@example.com",
-  //     pantry: {
-  //       name: "Bob's Pantry",
-  //       total: 80.2,
-  //       pantryItems: [
-  //         { name: "Milk", category: "Dairy", expDate: "2024-12-20", price: 2.5 },
-  //         { name: "Eggs", category: "Dairy", expDate: "2024-12-18", price: 1.8 },
-  //       ],
-  //     },
-  //   },
-  //   {
-  //     name: "Charlie",
-  //     email: "charlie@example.com",
-  //     pantry: {
-  //       name: "Charlie's Pantry",
-  //       total: 60.7,
-  //       pantryItems: [
-  //         { name: "Bananas", category: "Fruits", expDate: "2024-12-10", price: 1.2 },
-  //         { name: "Rice", category: "Grains", expDate: "2025-01-15", price: 3.0 },
-  //       ],
-  //     },
-  //   },
-  //   {
-  //     name: "Diana",
-  //     email: "diana@example.com",
-  //     pantry: {
-  //       name: "Diana's Pantry",
-  //       total: 95.3,
-  //       pantryItems: [
-  //         { name: "Chicken", category: "Meat", expDate: "2024-12-12", price: 5.5 },
-  //         { name: "Yogurt", category: "Dairy", expDate: "2024-12-15", price: 2.3 },
-  //       ],
-  //     },
-  //   },
-  //   {
-  //     name: "Eve",
-  //     email: "eve@example.com",
-  //     pantry: {
-  //       name: "Eve's Pantry",
-  //       total: 70.0,
-  //       pantryItems: [
-  //         { name: "Carrots", category: "Vegetables", expDate: "2024-12-25", price: 1.5 },
-  //         { name: "Potatoes", category: "Vegetables", expDate: "2025-01-05", price: 0.8 },
-  //       ],
-  //     },
-  //   },
-  // ];
+const Page = () => {
+  return (
+    <div className="container mx-auto p-8">
+      <h1 className="text-3xl font-bold text-center mb-6">Pantry Management</h1>
 
-  // // Create users with their pantries and food items
-  // for (const user of users) {
-  //   await prisma.user.create({
-  //     data: {
-  //       name: user.name,
-  //       email: user.email,
-  //       pantry: {
-  //         create: {
-  //           name: user.pantry.name,
-  //           total: user.pantry.total,
-  //           pantryItems: {
-  //             create: user.pantry.pantryItems,
-  //           },
-  //         },
-  //       },
-  //     },
-  //   });
-  // }
-  const users = await prisma.user.findMany({
-    include: {
-      pantry: {
-        include: {
-          pantryItems: true
-        }
-      }
-    }
-  })
-
-  return <div className="min-h-screen bg-gray-100 py-8 px-4">
-  <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
-    Users and Their Pantries
-  </h1>
-  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-    {users.map((user) => (
-      <div
-        key={user.id}
-        className="bg-white shadow-lg rounded-lg p-6 border border-gray-200"
-      >
-        <h2 className="text-xl font-semibold text-gray-800">
-          {user.name}
-        </h2>
-        <p className="text-gray-600 text-sm">{user.email}</p>
-        {user.pantry ? (
-          <div className="mt-4">
-            <h3 className="text-lg font-medium text-gray-700">
-              Pantry: {user.pantry.name}
-            </h3>
-            <p className="text-sm text-gray-500">
-              Total: ${user.pantry.total?.toFixed(2)}
-            </p>
-            <ul className="mt-2 space-y-2">
-              {user.pantry.pantryItems.map((item: any) => (
-                <li
-                  key={item.id}
-                  className="flex justify-between bg-gray-50 p-2 rounded-lg shadow-sm"
-                >
-                  <div>
-                    <p className="text-sm font-medium text-gray-700">
-                      {item.name}
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      Category: {item.category || "N/A"}
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      Exp Date: {item.expDate || "N/A"}
-                    </p>
-                  </div>
-                  <p className="text-sm text-gray-700">${item.price}</p>
-                </li>
-              ))}
-            </ul>
+      {user ? (
+        <div>
+          <div className="bg-white shadow-lg rounded-lg p-6 mb-6">
+            <h2 className="text-2xl font-semibold mb-4">User Information</h2>
+            <div className="space-y-2">
+              <p>
+                <strong>Name:</strong> {user.name}
+              </p>
+              <p>
+                <strong>Email:</strong> {user.email}
+              </p>
+            </div>
           </div>
-        ) : (
-          <p className="mt-4 text-sm text-gray-500">No pantry available.</p>
-        )}
-      </div>
-    ))}
-  </div>
-</div>
+
+          <div className="bg-white shadow-lg rounded-lg p-6 mb-6">
+            <h2 className="text-2xl font-semibold mb-4">Pantry Information</h2>
+            <div className="space-y-2">
+              <p>
+                <strong>Pantry Name:</strong> {user.pantry?.name}
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-white shadow-lg rounded-lg p-6">
+            <h2 className="text-2xl font-semibold mb-4">Food Items</h2>
+            <div className="overflow-x-auto">
+              <table className="min-w-full table-auto">
+                <thead>
+                  <tr className="border-b">
+                    <th className="px-4 py-2 text-left">Name</th>
+                    <th className="px-4 py-2 text-left">Category</th>
+                    <th className="px-4 py-2 text-left">Expiration Date</th>
+                    <th className="px-4 py-2 text-left">Price</th>
+                    <th className="px-4 py-2 text-left">Quantity</th>
+                    <th className="px-4 py-2 text-left">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {user.pantry?.pantryItems.map((item: any, index: number) => (
+                    <tr key={index} className="border-b hover:bg-gray-100">
+                      <td className="px-4 py-2">{item.name}</td>
+                      <td className="px-4 py-2 capitalize">{item.category}</td>
+                      <td className="px-4 py-2">
+                        {new Date(item.expDate).toLocaleDateString()}
+                      </td>
+                      <td className="px-4 py-2">${item.price.toFixed(2)}</td>
+                      <td className="px-4 py-2">{item.quantity}</td>
+                      <td className="px-4 py-2">
+                        ${(item.price * item.quantity).toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="text-center mt-6">
+          <p className="text-lg text-gray-600">
+            No user data available. Please create a user and pantry.
+          </p>
+        </div>
+      )}
+    </div>
+  );
 };
 
-export default page;
+export default Page;
