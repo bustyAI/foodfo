@@ -17,7 +17,7 @@ model User {
 model Pantry {
   id          Int     @id @default(autoincrement())
   name        String?
-  userId      String     @unique
+  userId      String  @unique
   total       Float   @default(0.0)
   pantryItems Food[]
   user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -30,7 +30,7 @@ model Food {
   price    Float
   quantity Int           @default(1)
   category FoodCategory?
-  expDate    DateTime?       @default("1998-06-03T00:00:00.000Z")
+  expDate  DateTime?     @default(now())
   pantry   Pantry        @relation(fields: [pantryId], references: [id], onDelete: Cascade)
 }
 

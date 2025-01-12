@@ -29,5 +29,5 @@ export async function POST() {
     });
   }
 
-  return NextResponse.json({ message: "Yes we are in db" });
+  return NextResponse.json({ message: "Sucessfully created User" });
 }

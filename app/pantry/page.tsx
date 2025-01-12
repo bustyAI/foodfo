@@ -13,9 +13,6 @@ import {
   CameraCampture,
 } from "../components";
 
-// Dummy Data
-import foods from "@/utils/data";
-
 const currentDate = new Intl.DateTimeFormat("en-US", {
   weekday: "long",
   day: "numeric",
@@ -39,12 +36,11 @@ function Pantry() {
               <div className="flex flex-row text-black/50 font-semibold">
                 {currentDate}
               </div>
-              <h2>{user.sub}</h2>
             </div>
           )}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {foods &&
+          {/* {foods &&
             foods.map((food) => (
               <FoodCard
                 key={food.name}
@@ -52,14 +48,12 @@ function Pantry() {
                 expDate={food.expDate}
                 category={food.category}
               />
-            ))}
+            ))} */}
 
-          {foods.length === 0 && (
-            <div>
-              <NoFood />
-              <CameraCampture />
-            </div>
-          )}
+          <div>
+            <NoFood />
+            <CameraCampture />
+          </div>
         </div>
       </div>
     );
