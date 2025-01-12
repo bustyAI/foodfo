@@ -9,27 +9,37 @@ import auth0 from "@/utils/auth0";
 export const GET = auth0.withApiAuthRequired(async function getPantry(
   req: NextRequest
 ) {
-  const res = new NextResponse();
-  const session = await auth0.getSession(req, res);
+  try {
+    const res = new NextResponse();
+    const session = await auth0.getSession(req, res);
 
-  if (!session || !session.user) {
-    return NextResponse.json({ error: "User not Authenticated" });
+    if (!session || !session.user) {
+      return NextResponse.json(
+        { error: "User not Authenticated" },
+        { status: 401 }
+      );
+    }
+
+    const { user } = session;
+
+    const pantry = await prisma.pantry.findUnique({
+      where: {
+        userId: user.sub,
+      },
+      include: {
+        pantryItems: true,
+      },
+    });
+
+    if (!pantry) {
+      return NextResponse.json({ error: "Pantry not Found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ pantry: pantry });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
-
-  const { user } = session;
-
-  const pantry = await prisma.pantry.findUnique({
-    where: {
-      userId: user.sub,
-    },
-    include: {
-      pantryItems: true,
-    },
-  });
-
-  if (!pantry) {
-    return NextResponse.json({ error: "Pantry not Found" });
-  }
-
-  return NextResponse.json({ pantry: pantry });
 });
