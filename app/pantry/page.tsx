@@ -14,7 +14,7 @@ import {
 } from "../components";
 
 // Dummy Data
-import { foods } from "@/utils/data";
+import foods from "@/utils/data";
 
 const currentDate = new Intl.DateTimeFormat("en-US", {
   weekday: "long",
@@ -39,6 +39,7 @@ function Pantry() {
               <div className="flex flex-row text-black/50 font-semibold">
                 {currentDate}
               </div>
+              <h2>{user.sub}</h2>
             </div>
           )}
         </div>
