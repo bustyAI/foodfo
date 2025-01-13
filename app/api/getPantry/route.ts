@@ -4,13 +4,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 // auth0
 import auth0 from "@/utils/auth0";
+import { NextApiRequest, NextApiResponse } from "next";
 
 // Protecting API route from unauthenticated users
 export const GET = auth0.withApiAuthRequired(async function getPantry(
-  req: NextRequest
+  req: NextApiRequest,
+  res: NextApiResponse
 ) {
   try {
-    const res = new NextResponse();
     const session = await auth0.getSession(req, res);
 
     if (!session || !session.user) {
