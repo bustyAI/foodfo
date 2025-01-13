@@ -1,8 +1,11 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 // Auth
 import { useUser } from "@auth0/nextjs-auth0/client";
+
+// Prisma Types
+import type { Pantry } from "@prisma/client";
 
 // Components
 import {
@@ -20,12 +23,27 @@ const currentDate = new Intl.DateTimeFormat("en-US", {
 }).format(new Date());
 
 function Pantry() {
+  // State
   const { user, isLoading } = useUser();
+  const [pantry, setPantry] = useState<Pantry | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("/api/getPantry");
+        const data = await res.json();
+        setPantry(data);
+      } catch (error) {
+        console.log("error");
+      }
+    };
+    fetchData();
+  }, []);
 
   if (isLoading) {
     return <Loading />;
   }
-
+  console.log(pantry);
   if (user) {
     return (
       <div className="flex flex-col">
@@ -39,22 +57,12 @@ function Pantry() {
             </div>
           )}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {/* {foods &&
-            foods.map((food) => (
-              <FoodCard
-                key={food.name}
-                name={food.name}
-                expDate={food.expDate}
-                category={food.category}
-              />
-            ))} */}
-
+        <main className="container mx-auto p-6">
           <div>
             <NoFood />
             <CameraCampture />
           </div>
-        </div>
+        </main>
       </div>
     );
   }

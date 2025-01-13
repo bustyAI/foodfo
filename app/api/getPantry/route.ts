@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "No Pantry found" }, { status: 404 });
     }
 
-    return NextResponse.json({ userPantry });
+    return NextResponse.json(userPantry);
   } catch (err) {
     return NextResponse.json(
       { error: "Internal Server Error" },
