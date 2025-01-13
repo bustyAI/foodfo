@@ -4,26 +4,22 @@ import { NextRequest, NextResponse } from "next/server";
 
 // auth0
 import auth0 from "@/utils/auth0";
-import { NextApiRequest, NextApiResponse } from "next";
 
 // Protecting API route from unauthenticated users
-export const GET = auth0.withApiAuthRequired(async function getPantry(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export async function GET(req: NextRequest) {
   try {
+    const res = new NextResponse();
     const session = await auth0.getSession(req, res);
 
     if (!session || !session.user) {
       return NextResponse.json(
-        { error: "User not Authenticated" },
+        { error: "User not authenticated" },
         { status: 401 }
       );
     }
 
     const { user } = session;
-
-    const pantry = await prisma.pantry.findUnique({
+    const userPantry = await prisma.pantry.findUnique({
       where: {
         userId: user.sub,
       },
@@ -32,15 +28,15 @@ export const GET = auth0.withApiAuthRequired(async function getPantry(
       },
     });
 
-    if (!pantry) {
-      return NextResponse.json({ error: "Pantry not Found" }, { status: 404 });
+    if (!userPantry) {
+      return NextResponse.json({ error: "No Pantry found" }, { status: 404 });
     }
 
-    return NextResponse.json({ pantry: pantry });
-  } catch (error) {
+    return NextResponse.json({ userPantry });
+  } catch (err) {
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
     );
   }
-});
+}
