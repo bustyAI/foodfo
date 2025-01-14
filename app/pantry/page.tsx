@@ -1,11 +1,11 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 // Auth
 import { useUser } from "@auth0/nextjs-auth0/client";
 
 // Prisma Types
-import type { Pantry } from "@prisma/client";
+import type { Pantry, Food } from "@prisma/client";
 
 // Components
 import {
@@ -16,6 +16,10 @@ import {
   CameraCampture,
 } from "../components";
 
+// Hooks
+import usePantry from "../hooks/usePantry";
+
+// Current Date
 const currentDate = new Intl.DateTimeFormat("en-US", {
   weekday: "long",
   day: "numeric",
@@ -25,25 +29,14 @@ const currentDate = new Intl.DateTimeFormat("en-US", {
 function Pantry() {
   // State
   const { user, isLoading } = useUser();
-  const [pantry, setPantry] = useState<Pantry | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch("/api/getPantry");
-        const data = await res.json();
-        setPantry(data);
-      } catch (error) {
-        console.log("error");
-      }
-    };
-    fetchData();
-  }, []);
+  // Hooks
+  const { pantry, pantryItems, error } = usePantry();
 
   if (isLoading) {
     return <Loading />;
   }
-  console.log(pantry);
+
   if (user) {
     return (
       <div className="flex flex-col">
@@ -57,12 +50,25 @@ function Pantry() {
             </div>
           )}
         </div>
-        <main className="container mx-auto p-6">
-          <div>
+        {error && (
+          <div className="mx-auto mt-4 font-semibold">
+            <h1>{error}</h1>
+          </div>
+        )}
+        {pantry && (
+          <main className="container mx-auto mt-4">
+            <h1 className="text-4xl font-bold text-center mb-6 text-black">
+              Pantry
+            </h1>
+          </main>
+        )}
+        <div className="container mx-auto p-6">
+          <FoodCard pantryItems={pantryItems} />
+          <div className="mt-10">
             <NoFood />
             <CameraCampture />
           </div>
-        </main>
+        </div>
       </div>
     );
   }

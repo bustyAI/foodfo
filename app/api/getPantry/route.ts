@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
     const { user } = session;
     const userPantry = await prisma.pantry.findUnique({
       where: {
-        userId: user.sub,
+        userId: "google-oauth2|106992489073321534817",
       },
       include: {
         pantryItems: true,
