@@ -2,7 +2,7 @@
 import React from "react";
 
 // Components
-import LoadingCircle from "./LoadingCircle";
+import Loading from "./Loading";
 
 // Hooks
 import useReceiptOCR from "../hooks/useReceiptOCR";
@@ -15,9 +15,7 @@ const ReceiptOCR = ({ image }: { image: string }) => {
       <h3>OCR Results:</h3>
       {isProcessing && (
         <div className="flex flex-row m-4">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <LoadingCircle key={index} height="h-4" width="w-4" />
-          ))}
+          <Loading />
         </div>
       )}
       {!isProcessing && ocrText && (
