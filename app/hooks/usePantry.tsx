@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Food } from "@prisma/client";
 
 // Interfaces
-import type { PantryWithItems } from "../interfaces";
+import type { PantryWithItems } from "../interfaces/PantryWithItems";
 
 const usePantry = () => {
   const [pantry, setPantry] = useState<PantryWithItems | null>(null);

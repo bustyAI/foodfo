@@ -39,12 +39,8 @@ enum FoodCategory {
   fruits
   dairy
   meat
-  seafood
-  grainsAndCereal
-  legumesAnduts
-  snacksAndSweets
+  grains
+  snacks
   beverages
-  spicesAndCondiments
-  frozenAndPrepared
-  cannedAndPackaged
+  condiments
 }

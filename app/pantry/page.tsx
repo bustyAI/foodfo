@@ -14,6 +14,7 @@ import {
   UnauthorizedUser,
   NoFood,
   CameraCampture,
+  CategorySearch,
 } from "../components";
 
 // Hooks
@@ -27,7 +28,7 @@ const currentDate = new Intl.DateTimeFormat("en-US", {
 }).format(new Date());
 
 function Pantry() {
-  // State
+  // auth0
   const { user, isLoading } = useUser();
 
   // Hooks
@@ -56,19 +57,15 @@ function Pantry() {
           </div>
         )}
         {pantry && (
-          <main className="container mx-auto mt-4">
-            <h1 className="text-4xl font-bold text-center mb-6 text-black">
-              Pantry
-            </h1>
-          </main>
+          <CategorySearch/>
         )}
-        <div className="container mx-auto p-6">
+        <main className="container mx-auto p-6">
           <FoodCard pantryItems={pantryItems} />
           <div className="mt-10">
             <NoFood />
             <CameraCampture />
           </div>
-        </div>
+        </main>
       </div>
     );
   }

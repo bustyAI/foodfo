@@ -18,6 +18,7 @@ import CameraCampture from "./CameraCampture";
 import ButtonNoHref from "./ButtonNoHref";
 import ReceiptOCR from "./ReceiptOCR";
 import NoFood from "./NoFood";
+import CategorySearch from "./CategorySearch";
 
 export {
   Navbar,
@@ -39,4 +40,5 @@ export {
   ButtonNoHref,
   ReceiptOCR,
   NoFood,
+  CategorySearch
 };
