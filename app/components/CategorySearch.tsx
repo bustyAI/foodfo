@@ -1,25 +1,28 @@
-"use client"
-import React, { useState } from 'react'
+"use client";
+import React, { useState } from "react";
 
-import foodCategories from '@/utils/data'
-import FoodCategoryButton from './FoodCategoryButton';
-
+import foodCategories from "@/utils/data";
+import FoodCategoryButton from "./FoodCategoryButton";
 
 const CategorySearch = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string| null>(null)
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const toggleSelected = (cat: string) => {
-    setSelectedCategory((prev) => (prev === cat ? null : cat))
-  }
+    setSelectedCategory((prev) => (prev === cat ? null : cat));
+  };
 
   return (
     <div className="flex justify-center flex-row flex-wrap gap-6 m-2">
       {foodCategories.map((cat) => (
-        <FoodCategoryButton key={cat} selectedCategory={selectedCategory} cat={cat} onClick={() => toggleSelected(cat)}/>
+        <FoodCategoryButton
+          key={cat}
+          selectedCategory={selectedCategory}
+          cat={cat}
+          onClick={() => toggleSelected(cat)}
+        />
       ))}
     </div>
   );
 };
 
-
-export default CategorySearch
+export default CategorySearch;

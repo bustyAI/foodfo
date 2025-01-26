@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { use } from "react";
 
 // Auth
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -27,12 +27,15 @@ const currentDate = new Intl.DateTimeFormat("en-US", {
   month: "long",
 }).format(new Date());
 
-function Pantry() {
+function Pantry({ params }: { params: Promise<{ category: string }> }) {
   // auth0
   const { user, isLoading } = useUser();
 
   // Hooks
   const { pantry, pantryItems, error } = usePantry();
+
+  // need "use" here from react because params is now promise
+  const category = use(params);
 
   if (isLoading) {
     return <Loading />;
@@ -56,9 +59,7 @@ function Pantry() {
             <h1>{error}</h1>
           </div>
         )}
-        {pantry && (
-          <CategorySearch/>
-        )}
+        {pantry && <CategorySearch />}
         <main className="container mx-auto p-6">
           <FoodCard pantryItems={pantryItems} />
           <div className="mt-10">

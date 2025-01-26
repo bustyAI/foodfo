@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(userPantry);
   } catch (err) {
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: "Internal Server Error. Please try again." },
       { status: 500 }
     );
   }
