@@ -1,9 +1,11 @@
-const foodCategories = ["vegetables",
-  "Fruits",
-  "Dairy",
-  "Meat",
-  "Grains",
-  "Snacks",
-  "Beverages",
-  "Condiments"]
+const foodCategories = [
+  "vegetables",
+  "fruits",
+  "dairy",
+  "meat",
+  "grains",
+  "snacks",
+  "beverages",
+  "condiments",
+];
 export default foodCategories;

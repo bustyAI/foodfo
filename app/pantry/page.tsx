@@ -1,5 +1,5 @@
 "use client";
-import React, { use } from "react";
+import React, { useEffect, useState } from "react";
 
 // Auth
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -27,15 +27,28 @@ const currentDate = new Intl.DateTimeFormat("en-US", {
   month: "long",
 }).format(new Date());
 
-function Pantry({ params }: { params: Promise<{ category: string }> }) {
+function Pantry() {
   // auth0
   const { user, isLoading } = useUser();
 
   // Hooks
   const { pantry, pantryItems, error } = usePantry();
 
-  // need "use" here from react because params is now promise
-  const category = use(params);
+  // State
+  const [filteredFood, setFilteredFood] = useState<Food[]>([]);
+
+  const handleCategorySelect = (category: string | null) => {
+    if (category) {
+      const filtered = pantryItems.filter((item) => item.category === category);
+      setFilteredFood(filtered);
+    } else {
+      setFilteredFood(pantryItems);
+    }
+  };
+
+  useEffect(() => {
+    setFilteredFood(pantryItems);
+  }, [pantryItems]);
 
   if (isLoading) {
     return <Loading />;
@@ -59,9 +72,9 @@ function Pantry({ params }: { params: Promise<{ category: string }> }) {
             <h1>{error}</h1>
           </div>
         )}
-        {pantry && <CategorySearch />}
+        {pantry && <CategorySearch onCategorySelect={handleCategorySelect} />}
         <main className="container mx-auto p-6">
-          <FoodCard pantryItems={pantryItems} />
+          <FoodCard pantryItems={filteredFood} />
           <div className="mt-10">
             <NoFood />
             <CameraCampture />

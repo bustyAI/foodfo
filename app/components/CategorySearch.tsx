@@ -4,11 +4,17 @@ import React, { useState } from "react";
 import foodCategories from "@/utils/data";
 import FoodCategoryButton from "./FoodCategoryButton";
 
-const CategorySearch = () => {
+const CategorySearch = ({
+  onCategorySelect,
+}: {
+  onCategorySelect: (category: string | null) => void;
+}) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const toggleSelected = (cat: string) => {
-    setSelectedCategory((prev) => (prev === cat ? null : cat));
+    const newCategory = selectedCategory === cat ? null : cat;
+    setSelectedCategory(newCategory);
+    onCategorySelect(newCategory);
   };
 
   return (
