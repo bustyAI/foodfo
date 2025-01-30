@@ -42,6 +42,8 @@ function Pantry() {
     }
   };
 
+  // Set filtered food items here to populate foodCard component
+  // Since we are passing the filtered items to foodCard not pantry items
   useEffect(() => {
     setFilteredFood(pantryItems);
   }, [pantryItems]);

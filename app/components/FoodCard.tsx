@@ -1,12 +1,26 @@
 import { Food } from "@prisma/client";
-import Image from "next/image";
 import React from "react";
+
+// API functions
+import { deleteFoodItem } from "@/utils/api";
 
 interface foodProps {
   pantryItems: Food[];
 }
 
 const FoodCard = ({ pantryItems }: foodProps) => {
+  const handleFoodItemDelete = async (foodId: number) => {
+    try {
+      const data = await deleteFoodItem(foodId);
+      // Set UI here showing item has been deleted
+      console.log(data.foodItem.name);
+    } catch (error) {
+      if (error instanceof Error) {
+        // Set error Message here
+        console.log("frontend error:", error.message);
+      }
+    }
+  };
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {pantryItems.map((item) => (
@@ -34,7 +48,14 @@ const FoodCard = ({ pantryItems }: foodProps) => {
               )}
             </div>
           </div>
-          <div className="bg-[#FFCC99] p-6 rounded-b-lg text-center"></div>
+          <div className="bg-[#FFCC99] p-6 rounded-b-lg text-center">
+            <button
+              onClick={() => handleFoodItemDelete(item.id)}
+              className="bg-red-400 rounded-md p-2"
+            >
+              Delete
+            </button>
+          </div>
         </div>
       ))}
     </div>
