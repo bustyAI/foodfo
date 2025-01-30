@@ -21,11 +21,7 @@ import {
 import usePantry from "../hooks/usePantry";
 
 // Current Date
-const currentDate = new Intl.DateTimeFormat("en-US", {
-  weekday: "long",
-  day: "numeric",
-  month: "long",
-}).format(new Date());
+import currentDate from "@/utils/date";
 
 function Pantry() {
   // auth0
