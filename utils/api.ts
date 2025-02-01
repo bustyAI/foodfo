@@ -12,10 +12,11 @@ export const deleteFoodItem = async (foodId: number) => {
       const errorText = await res.json();
       throw new Error(errorText.error);
     }
-    return await res.json();
+    const data = await res.json();
+
+    return data.foodItem;
   } catch (error) {
     if (error instanceof Error) {
-      console.log("Error deleting food item:", error.message);
       throw new Error(`Delete operation failed: ${error.message}`);
     } else {
       throw new Error("An unexpected error occured please try again");

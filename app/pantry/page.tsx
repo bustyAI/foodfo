@@ -7,6 +7,9 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 // Prisma Types
 import type { Pantry, Food } from "@prisma/client";
 
+// API funcs
+import { deleteFoodItem } from "@/utils/api";
+
 // Components
 import {
   FoodCard,
@@ -24,64 +27,71 @@ import usePantry from "../hooks/usePantry";
 import currentDate from "@/utils/date";
 
 function Pantry() {
-  // auth0
-  const { user, isLoading } = useUser();
-
   // Hooks
-  const { pantry, pantryItems, error } = usePantry();
+  const { user, isLoading } = useUser();
+  const { pantry, setPantry, error } = usePantry();
 
   // State
   const [filteredFood, setFilteredFood] = useState<Food[]>([]);
 
+  useEffect(() => {
+    if (pantry) {
+      setFilteredFood(pantry.pantryItems);
+    }
+  }, [pantry]);
+
   const handleCategorySelect = (category: string | null) => {
     if (category) {
-      const filtered = pantryItems.filter((item) => item.category === category);
-      setFilteredFood(filtered);
+      setFilteredFood(
+        pantry?.pantryItems.filter((item) => item.category === category) || []
+      );
     } else {
-      setFilteredFood(pantryItems);
+      setFilteredFood(pantry?.pantryItems || []);
     }
   };
 
-  // Set filtered food items here to populate foodCard component
-  // Since we are passing the filtered items to foodCard not pantry items
-  useEffect(() => {
-    setFilteredFood(pantryItems);
-  }, [pantryItems]);
+  const handleDeleteFoodItem = async (foodId: number) => {
+    try {
+      const deletedFoodItem = await deleteFoodItem(foodId);
+      console.log(deletedFoodItem.name);
 
-  if (isLoading) {
-    return <Loading />;
-  }
+      if (pantry) {
+        const updatedPantry = {
+          ...pantry,
+          pantryItems: pantry.pantryItems.filter((item) => item.id !== foodId),
+        };
 
-  if (user) {
-    return (
-      <div className="flex flex-col">
-        <div className="text-left p-2">
-          {user && (
-            <div className="flex flex-col">
-              <h1 className="text-lg font-semibold">{user.name}'s Pantry</h1>
-              <div className="flex flex-row text-black/50 font-semibold">
-                {currentDate}
-              </div>
-            </div>
-          )}
+        setPantry(updatedPantry);
+        setFilteredFood(updatedPantry.pantryItems);
+      }
+    } catch (error) {
+      console.error("Error deleting food item:", error);
+    }
+  };
+
+  if (isLoading) return <Loading />;
+  if (!user) return <UnauthorizedUser />;
+
+  return (
+    <div className="flex flex-col">
+      <div className="text-left p-2">
+        <h1 className="text-lg font-semibold">{user.name}'s Pantry</h1>
+        <div className="flex flex-row text-black/50 font-semibold">
+          {currentDate}
         </div>
-        {error && (
-          <div className="mx-auto mt-4 font-semibold">
-            <h1>{error}</h1>
-          </div>
-        )}
-        {pantry && <CategorySearch onCategorySelect={handleCategorySelect} />}
-        <main className="container mx-auto p-6">
-          <FoodCard pantryItems={filteredFood} />
-          <div className="mt-10">
-            <NoFood />
-            <CameraCampture />
-          </div>
-        </main>
       </div>
-    );
-  }
-  return <UnauthorizedUser />;
-}
 
+      {error && <div className="mx-auto mt-4 font-semibold">{error}</div>}
+      {pantry && <CategorySearch onCategorySelect={handleCategorySelect} />}
+
+      <main className="container mx-auto p-6">
+        <FoodCard pantryItems={filteredFood} onDelete={handleDeleteFoodItem} />
+        <div className="mt-10">
+          <NoFood />
+          <CameraCampture />
+        </div>
+      </main>
+    </div>
+  );
+}
 export default Pantry;

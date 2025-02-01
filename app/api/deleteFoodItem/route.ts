@@ -51,9 +51,6 @@ export async function DELETE(req: NextRequest) {
         id: foodId,
         pantryId: pantry.id,
       },
-      select: {
-        name: true,
-      },
     });
 
     return NextResponse.json({ foodItem: deletedItem }, { status: 200 });
