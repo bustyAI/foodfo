@@ -29,7 +29,7 @@ import currentDate from "@/utils/date";
 function Pantry() {
   // Hooks
   const { user, isLoading } = useUser();
-  const { pantry, setPantry, error } = usePantry();
+  const { pantry, setPantry, error, setError } = usePantry();
 
   // State
   const [filteredFood, setFilteredFood] = useState<Food[]>([]);
@@ -65,16 +65,17 @@ function Pantry() {
         setFilteredFood(updatedPantry.pantryItems);
       }
     } catch (error) {
-      // Update error to reflect UI
-      console.error("Error deleting food item:", error);
+      console.log(error);
+      setError("Unable to delete food item");
     }
   };
 
-  const handleUpdateFoodItem = async (foodId: number) => {
+  const handleUpdateFoodItem = async (foodId: number, newExpDate: Date) => {
     try {
-      const updatedFoodItem = await updateFoodItem(foodId);
-      console.log("Updated Food item:", updatedFoodItem.name);
-      console.log("new Date: ", updatedFoodItem.expDate);
+      const updatedFoodItem = await updateFoodItem(
+        foodId,
+        newExpDate.toISOString()
+      );
 
       if (pantry) {
         const updatedPantry = {
@@ -88,8 +89,8 @@ function Pantry() {
         setFilteredFood(updatedPantry.pantryItems);
       }
     } catch (error) {
-      // Update error to reflect UI
-      console.log("Error deleting food item");
+      console.log("Error updating food item");
+      setError("Unable to update expiration date");
     }
   };
 

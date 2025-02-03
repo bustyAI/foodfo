@@ -16,7 +16,7 @@ export async function PATCH(req: NextRequest) {
 
     const { foodId, expDate } = await req.json();
 
-    if (!foodId || expDate) {
+    if (!foodId || !expDate) {
       return NextResponse.json(
         { error: "No food id or expiration date provided" },
         { status: 404 }
@@ -44,7 +44,7 @@ export async function PATCH(req: NextRequest) {
         pantryId: pantry.id,
       },
       data: {
-        expDate: "2025-02-08T15:30:00.000Z",
+        expDate: expDate,
       },
     });
 

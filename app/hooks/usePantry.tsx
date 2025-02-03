@@ -33,7 +33,7 @@ const usePantry = () => {
     fetchData();
   }, []);
 
-  return { pantry, error, setPantry };
+  return { pantry, error, setPantry, setError };
 };
 
 export default usePantry;

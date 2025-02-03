@@ -24,14 +24,14 @@ export const deleteFoodItem = async (foodId: number) => {
   }
 };
 
-export const updateFoodItem = async (foodId: number) => {
+export const updateFoodItem = async (foodId: number, expDate: string) => {
   try {
     const res = await fetch("/api/editExpDate", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ foodId }),
+      body: JSON.stringify({ foodId, expDate }),
     });
 
     if (!res.ok) {
