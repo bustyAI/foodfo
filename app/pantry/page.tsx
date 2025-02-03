@@ -8,7 +8,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import type { Pantry, Food } from "@prisma/client";
 
 // API funcs
-import { deleteFoodItem } from "@/utils/api";
+import { deleteFoodItem, updateFoodItem } from "@/utils/api";
 
 // Components
 import {
@@ -29,7 +29,7 @@ import currentDate from "@/utils/date";
 function Pantry() {
   // Hooks
   const { user, isLoading } = useUser();
-  const { pantry, setPantry, error } = usePantry();
+  const { pantry, setPantry, error, setError } = usePantry();
 
   // State
   const [filteredFood, setFilteredFood] = useState<Food[]>([]);
@@ -65,7 +65,32 @@ function Pantry() {
         setFilteredFood(updatedPantry.pantryItems);
       }
     } catch (error) {
-      console.error("Error deleting food item:", error);
+      console.log(error);
+      setError("Unable to delete food item");
+    }
+  };
+
+  const handleUpdateFoodItem = async (foodId: number, newExpDate: Date) => {
+    try {
+      const updatedFoodItem = await updateFoodItem(
+        foodId,
+        newExpDate.toISOString()
+      );
+
+      if (pantry) {
+        const updatedPantry = {
+          ...pantry,
+          pantryItems: pantry.pantryItems.map((item) =>
+            item.id === foodId ? updatedFoodItem : item
+          ),
+        };
+
+        setPantry(updatedPantry);
+        setFilteredFood(updatedPantry.pantryItems);
+      }
+    } catch (error) {
+      console.log("Error updating food item");
+      setError("Unable to update expiration date");
     }
   };
 
@@ -85,7 +110,11 @@ function Pantry() {
       {pantry && <CategorySearch onCategorySelect={handleCategorySelect} />}
 
       <main className="container mx-auto p-6">
-        <FoodCard pantryItems={filteredFood} onDelete={handleDeleteFoodItem} />
+        <FoodCard
+          pantryItems={filteredFood}
+          onDelete={handleDeleteFoodItem}
+          onEdit={handleUpdateFoodItem}
+        />
         <div className="mt-10">
           <NoFood />
           <CameraCampture />

@@ -1,12 +1,29 @@
+"use client";
 import { Food } from "@prisma/client";
-import React from "react";
+import React, { useState } from "react";
 
 interface FoodProps {
   pantryItems: Food[];
   onDelete: (foodId: number) => void;
+  onEdit: (foodId: number, newDate: Date) => void;
 }
 
-const FoodCard = ({ pantryItems, onDelete }: FoodProps) => {
+const FoodCard = ({ pantryItems, onDelete, onEdit }: FoodProps) => {
+  const [editingItemId, setEditingItemId] = useState<number | null>(null);
+  const [newExpDate, setNewExpDate] = useState<string>("");
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewExpDate(e.target.value);
+  };
+
+  const saveNewDate = (foodId: number) => {
+    if (!newExpDate) return;
+
+    const dateToSave = new Date(newExpDate);
+    onEdit(foodId, dateToSave);
+    setEditingItemId(null);
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {pantryItems.map((item) => (
@@ -25,8 +42,40 @@ const FoodCard = ({ pantryItems, onDelete }: FoodProps) => {
                 {item.quantity}
               </div>
               {item.expDate && (
-                <div className="text-sm text-gray-500">
-                  Expires: {new Date(item.expDate).toLocaleDateString()}
+                <div className="text-sm text-black">
+                  {editingItemId === item.id ? (
+                    <div className="flex items-center ">
+                      <input
+                        type="date"
+                        value={newExpDate}
+                        onChange={handleDateChange}
+                        className="rounded-lg border p-2"
+                      />
+                      <button
+                        onClick={() => saveNewDate(item.id)}
+                        className="ml-2 bg-orange-300 text-black p-2 rounded-lg"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        setEditingItemId(item.id);
+                        setNewExpDate(
+                          item.expDate
+                            ? new Date(item.expDate).toISOString().split("T")[0] // Convert to date string
+                            : ""
+                        );
+                      }}
+                      className="rounded-lg bg-orange-300 p-2"
+                    >
+                      Expires:{" "}
+                      {item.expDate
+                        ? new Date(item.expDate).toLocaleDateString()
+                        : "No Expiry"}
+                    </button>
+                  )}
                 </div>
               )}
             </div>
