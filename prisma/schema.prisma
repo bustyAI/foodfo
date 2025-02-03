@@ -31,6 +31,7 @@ model Food {
   quantity Int           @default(1)
   category FoodCategory?
   expDate  DateTime?     @default(now())
+  expired  Boolean       @default(false)
   pantry   Pantry        @relation(fields: [pantryId], references: [id], onDelete: Cascade)
 }
 
@@ -43,4 +44,5 @@ enum FoodCategory {
   snacks
   beverages
   condiments
+  expired
 }

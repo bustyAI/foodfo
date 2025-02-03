@@ -7,5 +7,6 @@ const foodCategories = [
   "snacks",
   "beverages",
   "condiments",
+  "expired",
 ];
 export default foodCategories;

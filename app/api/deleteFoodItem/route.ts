@@ -21,7 +21,7 @@ export async function DELETE(req: NextRequest) {
     const pantry = await prisma.pantry.findUnique({
       where: {
         // Place holder
-        userId: "google-oauth2|106992489073321534817",
+        userId: "google-oauth2|106992489073321534816",
       },
       include: {
         pantryItems: true,

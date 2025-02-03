@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
     const userPantry = await prisma.pantry.findUnique({
       where: {
         // Place holder here
-        userId: "google-oauth2|106992489073321534817",
+        userId: "google-oauth2|106992489073321534816",
       },
       include: {
         pantryItems: true,

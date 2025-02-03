@@ -1,9 +1,17 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+// Helper functions to generate expiration dates
+const pastDate = (daysAgo: number): Date => {
+  return new Date(new Date().setDate(new Date().getDate() - daysAgo));
+};
+
+const futureDate = (daysAhead: number): Date => {
+  return new Date(new Date().setDate(new Date().getDate() + daysAhead));
+};
+
 async function main() {
-  // User 1
   await prisma.user.create({
     data: {
       id: "google-oauth2|106992489073321534816",
@@ -15,112 +23,46 @@ async function main() {
           total: 100.0,
           pantryItems: {
             create: [
-              { name: "Apples", price: 2.99, quantity: 10, category: "fruits" },
-              { name: "Milk", price: 1.49, quantity: 5, category: "dairy" },
-            ],
-          },
-        },
-      },
-    },
-  });
-
-  // User 2
-  await prisma.user.create({
-    data: {
-      id: "google-oauth2|106992489073321534817",
-      name: "Jane Smith",
-      email: "janesmith@example.com",
-      pantry: {
-        create: {
-          name: "Jane's Pantry",
-          total: 50.0,
-          pantryItems: {
-            create: [
+              {
+                name: "Apples",
+                price: 2.99,
+                quantity: 10,
+                category: "fruits",
+                expDate: pastDate(10),
+                expired: true,
+              } as Prisma.FoodCreateWithoutPantryInput,
+              {
+                name: "Milk",
+                price: 1.49,
+                quantity: 5,
+                category: "dairy",
+                expDate: pastDate(5),
+                expired: true,
+              } as Prisma.FoodCreateWithoutPantryInput,
               {
                 name: "Carrots",
                 price: 1.99,
                 quantity: 7,
                 category: "vegetables",
-              },
-              { name: "Eggs", price: 3.99, quantity: 12, category: "dairy" },
-            ],
-          },
-        },
-      },
-    },
-  });
-
-  // User 3
-  await prisma.user.create({
-    data: {
-      id: "google-oauth2|106992489073321534818",
-      name: "Alex Johnson",
-      email: "alexjohnson@example.com",
-      pantry: {
-        create: {
-          name: "Alex's Pantry",
-          total: 200.0,
-          pantryItems: {
-            create: [
+                expDate: futureDate(10),
+                expired: false,
+              } as Prisma.FoodCreateWithoutPantryInput,
               {
-                name: "Bananas",
-                price: 1.29,
-                quantity: 15,
-                category: "fruits",
-              },
-              { name: "Cheese", price: 4.5, quantity: 3, category: "dairy" },
-            ],
-          },
-        },
-      },
-    },
-  });
-
-  // User 4
-  await prisma.user.create({
-    data: {
-      id: "google-oauth2|106992489073321534819",
-      name: "Emily Davis",
-      email: "emilydavis@example.com",
-      pantry: {
-        create: {
-          name: "Emily's Pantry",
-          total: 75.0,
-          pantryItems: {
-            create: [
+                name: "Chicken",
+                price: 5.99,
+                quantity: 1,
+                category: "meat",
+                expDate: futureDate(14),
+                expired: false,
+              } as Prisma.FoodCreateWithoutPantryInput,
               {
-                name: "Oranges",
-                price: 2.49,
-                quantity: 10,
-                category: "fruits",
-              },
-              { name: "Yogurt", price: 3.19, quantity: 6, category: "dairy" },
-            ],
-          },
-        },
-      },
-    },
-  });
-
-  // User 5
-  await prisma.user.create({
-    data: {
-      id: "google-oauth2|106992489073321534820",
-      name: "Mark Brown",
-      email: "markbrown@example.com",
-      pantry: {
-        create: {
-          name: "Mark's Pantry",
-          total: 120.0,
-          pantryItems: {
-            create: [
-              {
-                name: "Spinach",
+                name: "Butter",
                 price: 2.79,
-                quantity: 8,
-                category: "vegetables",
-              },
-              { name: "Butter", price: 2.99, quantity: 4, category: "dairy" },
+                quantity: 3,
+                category: "dairy",
+                expDate: futureDate(20),
+                expired: false,
+              } as Prisma.FoodCreateWithoutPantryInput,
             ],
           },
         },
