@@ -5,8 +5,9 @@ import auth0 from "@/utils/auth0";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(req: NextRequest) {
+  const res = new NextResponse();
   try {
-    const session = await auth0.getSession();
+    const session = await auth0.getSession(req, res);
 
     if (!session || !session.user) {
       return NextResponse.json(

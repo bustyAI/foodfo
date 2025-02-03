@@ -8,7 +8,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import type { Pantry, Food } from "@prisma/client";
 
 // API funcs
-import { deleteFoodItem } from "@/utils/api";
+import { deleteFoodItem, updateFoodItem } from "@/utils/api";
 
 // Components
 import {
@@ -65,7 +65,31 @@ function Pantry() {
         setFilteredFood(updatedPantry.pantryItems);
       }
     } catch (error) {
+      // Update error to reflect UI
       console.error("Error deleting food item:", error);
+    }
+  };
+
+  const handleUpdateFoodItem = async (foodId: number) => {
+    try {
+      const updatedFoodItem = await updateFoodItem(foodId);
+      console.log("Updated Food item:", updatedFoodItem.name);
+      console.log("new Date: ", updatedFoodItem.expDate);
+
+      if (pantry) {
+        const updatedPantry = {
+          ...pantry,
+          pantryItems: pantry.pantryItems.map((item) =>
+            item.id === foodId ? updatedFoodItem : item
+          ),
+        };
+
+        setPantry(updatedPantry);
+        setFilteredFood(updatedPantry.pantryItems);
+      }
+    } catch (error) {
+      // Update error to reflect UI
+      console.log("Error deleting food item");
     }
   };
 
@@ -85,7 +109,11 @@ function Pantry() {
       {pantry && <CategorySearch onCategorySelect={handleCategorySelect} />}
 
       <main className="container mx-auto p-6">
-        <FoodCard pantryItems={filteredFood} onDelete={handleDeleteFoodItem} />
+        <FoodCard
+          pantryItems={filteredFood}
+          onDelete={handleDeleteFoodItem}
+          onEdit={handleUpdateFoodItem}
+        />
         <div className="mt-10">
           <NoFood />
           <CameraCampture />

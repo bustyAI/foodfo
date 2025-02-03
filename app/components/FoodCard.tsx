@@ -4,9 +4,10 @@ import React from "react";
 interface FoodProps {
   pantryItems: Food[];
   onDelete: (foodId: number) => void;
+  onEdit: (foodId: number) => void;
 }
 
-const FoodCard = ({ pantryItems, onDelete }: FoodProps) => {
+const FoodCard = ({ pantryItems, onDelete, onEdit }: FoodProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {pantryItems.map((item) => (
@@ -25,8 +26,13 @@ const FoodCard = ({ pantryItems, onDelete }: FoodProps) => {
                 {item.quantity}
               </div>
               {item.expDate && (
-                <div className="text-sm text-gray-500">
-                  Expires: {new Date(item.expDate).toLocaleDateString()}
+                <div className="text-sm text-black">
+                  <button
+                    onClick={() => onEdit(item.id)}
+                    className="rounded-lg bg-orange-300 p-2"
+                  >
+                    Expires: {new Date(item.expDate).toLocaleDateString()}
+                  </button>
                 </div>
               )}
             </div>
