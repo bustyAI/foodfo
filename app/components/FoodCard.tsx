@@ -27,7 +27,20 @@ const FoodCard = ({ pantryItems, onDelete, onEdit }: FoodProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {pantryItems.map((item) => (
-        <div key={item.id} className="bg-orange-50 shadow-lg rounded-lg">
+        <div
+          key={item.id}
+          className={`relative shadow-lg rounded-lg transition-all duration-300 ${
+            item.expired
+              ? "border-red-500 border-2 bg-gray-100 opacity-75 grayscale"
+              : "bg-orange-50"
+          }`}
+        >
+          {item.expired && (
+            <span className="absolute top-2 right-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-md">
+              Expired
+            </span>
+          )}
+
           <div className="p-4">
             <h2 className="text-2xl font-semibold text-black">{item.name}</h2>
             <p className="text-sm text-gray-600 mt-2">
@@ -44,7 +57,7 @@ const FoodCard = ({ pantryItems, onDelete, onEdit }: FoodProps) => {
               {item.expDate && (
                 <div className="text-sm text-black">
                   {editingItemId === item.id ? (
-                    <div className="flex items-center ">
+                    <div className="flex items-center">
                       <input
                         type="date"
                         value={newExpDate}
@@ -64,7 +77,7 @@ const FoodCard = ({ pantryItems, onDelete, onEdit }: FoodProps) => {
                         setEditingItemId(item.id);
                         setNewExpDate(
                           item.expDate
-                            ? new Date(item.expDate).toISOString().split("T")[0] // Convert to date string
+                            ? new Date(item.expDate).toISOString().split("T")[0]
                             : ""
                         );
                       }}
