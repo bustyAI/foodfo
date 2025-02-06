@@ -38,6 +38,9 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: "No pantry found" }, { status: 404 });
     }
 
+    const newExpDate = new Date(expDate);
+    const isExpired = newExpDate < new Date();
+
     const updatedFoodItem = await prisma.food.update({
       where: {
         id: foodId,
@@ -45,6 +48,7 @@ export async function PATCH(req: NextRequest) {
       },
       data: {
         expDate: expDate,
+        expired: isExpired,
       },
     });
 
