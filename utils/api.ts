@@ -49,3 +49,29 @@ export const updateFoodItem = async (foodId: number, expDate: string) => {
     }
   }
 };
+
+export const processOcrData = async (ocrText: string) => {
+  try {
+    const res = await fetch("/api/processOcr", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ocrText }),
+    });
+
+    if (!res.ok) {
+      const errorText = await res.json();
+      throw new Error(errorText.error);
+    }
+
+    const data = await res.json();
+    return data.structuredData;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Error fetching processed text:${error.message}`);
+    } else {
+      throw new Error("An unexpected error occured please try again");
+    }
+  }
+};
