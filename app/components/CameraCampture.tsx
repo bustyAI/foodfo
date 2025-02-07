@@ -3,7 +3,11 @@ import React, { useRef, useState } from "react";
 import ButtonNoHref from "./ButtonNoHref";
 import ReceiptOCR from "./ReceiptOCR";
 
-const CameraCapture = () => {
+const CameraCapture = ({
+  refreshPantry,
+}: {
+  refreshPantry: () => Promise<void>;
+}) => {
   const [image, setImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -51,7 +55,7 @@ const CameraCapture = () => {
           <h3>Captured Image:</h3>
           <img className="w-[20%]" src={image} alt="captured-image" />
           <ButtonNoHref onClick={handleRedoCapture} text="Redo Capture" />
-          <ReceiptOCR image={image} />
+          <ReceiptOCR image={image} refreshPantry={refreshPantry} />
         </div>
       )}
     </div>

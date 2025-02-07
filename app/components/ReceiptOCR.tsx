@@ -10,11 +10,19 @@ import useReceiptOCR from "../hooks/useReceiptOCR";
 // API calls
 import { processOcrData } from "@/utils/api";
 
-const ReceiptOCR = ({ image }: { image: string }) => {
+const ReceiptOCR = ({
+  image,
+  refreshPantry,
+}: {
+  image: string;
+  refreshPantry: () => Promise<void>;
+}) => {
   const { ocrText, receiptData, isProcessing } = useReceiptOCR(image);
 
   const handleGemini = async () => {
     const processedOcrData = await processOcrData(ocrText);
+    refreshPantry();
+    console.log("Data:", processedOcrData);
   };
 
   return (
@@ -25,7 +33,10 @@ const ReceiptOCR = ({ image }: { image: string }) => {
         </div>
       )}
       {!isProcessing && (
-        <button className="bg-orange-400 rounded-md p-3" onClick={handleGemini}>
+        <button
+          className="bg-orange-400 rounded-md m-2 p-2"
+          onClick={handleGemini}
+        >
           Store Data
         </button>
       )}

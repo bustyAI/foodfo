@@ -94,6 +94,20 @@ function Pantry() {
     }
   };
 
+  const refreshPantry = async () => {
+    try {
+      const res = await fetch("/api/getPantry"); // Ensure this API returns the latest pantry items
+      if (res.ok) {
+        const updatedPantry = await res.json();
+        setPantry(updatedPantry);
+        setFilteredFood(updatedPantry.pantryItems);
+      }
+    } catch (error) {
+      console.error("Error refreshing pantry:", error);
+      setError("Unable to refresh pantry");
+    }
+  };
+
   if (isLoading) return <Loading />;
   if (!user) return <UnauthorizedUser />;
 
@@ -117,7 +131,7 @@ function Pantry() {
         />
         <div className="mt-10">
           <NoFood />
-          <CameraCampture />
+          <CameraCampture refreshPantry={refreshPantry} />
         </div>
       </main>
     </div>
